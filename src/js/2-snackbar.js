@@ -5,12 +5,12 @@ import "izitoast/dist/css/iziToast.min.css";
 
 const messageTrue = {
   color: 'green',
-  position: 'topCenter',
+  position: 'topLeft',
 };
 
 const messageFalse = {
   color: 'red',
-  position: 'topCenter',
+  position: 'topLeft',
 };
 
 const radioBtnSet = document.querySelector("fieldset");
@@ -23,19 +23,27 @@ radioBtnSet.addEventListener("change", e => selectedRadioBtn = e.target);
 
 submitBtn.addEventListener("click", (e) => {
   e.preventDefault();
+  if (selectedRadioBtn === undefined) {
+    return iziToast.show({ ...messageFalse, message: 'Please select any state option'})}
+
+  const inputTimeValue = inputTime.value;
+
+  if (inputTimeValue < 1) {
+    return iziToast.show({ ...messageFalse, message: 'Delay must be positive number'})}
+
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (selectedRadioBtn.value === "fulfilled") {
-        resolve()
+        resolve(inputTimeValue)
       } else {
-        reject()
+        reject(inputTimeValue)
       }
     }, inputTime.value)
   })
-    .then(messageOk => {
-      iziToast.show({ ...messageTrue, message: `✅ Fulfilled promise in ${inputTime.value} ms` })
+    .then(val => {
+      iziToast.show({ ...messageTrue, message: `✅ Fulfilled promise in ${val} ms` })
     })
-    .catch(error => {
-      iziToast.show({ ...messageFalse, message: `❌ Rejected promise in ${inputTime.value} ms` })
+    .catch(err => {
+      iziToast.show({ ...messageFalse, message: `❌ Rejected promise in ${err} ms` })
     })
 })
