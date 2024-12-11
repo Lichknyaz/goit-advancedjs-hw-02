@@ -139,7 +139,7 @@ button {
   font-size: 16px;
 }
 
-.feedback-form{
+form{
   max-width: 360px;
   display: flex;
   padding: 24px;
@@ -149,6 +149,15 @@ button {
   border-radius: 8px;
   background: #FFF;
   margin: 0 auto;
+}
+
+fieldset{
+  display: flex;
+  width: 100%;
+}
+
+fieldset label{
+  flex-direction: row;
 }
 
 label {
